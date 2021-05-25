@@ -23,6 +23,20 @@ namespace Acme.BookStore.Web.Menus
             var administration = context.Menu.GetAdministration();
             var l = context.GetLocalizer<BookStoreResource>();
 
+            //将Book页面添加到主菜单
+            context.Menu.AddItem(
+                new ApplicationMenuItem(
+                    "BooksStore",
+                    l["Menu:BookStore"],
+                    icon: "fa fa-book"
+                ).AddItem(
+                    new ApplicationMenuItem(
+                        "BooksStore.Books",
+                        l["Menu:Books"],
+                        url: "/Books"
+                    )
+                ));
+
             context.Menu.Items.Insert(
                 0,
                 new ApplicationMenuItem(
@@ -33,7 +47,7 @@ namespace Acme.BookStore.Web.Menus
                     order: 0
                 )
             );
-            
+
             if (MultiTenancyConsts.IsEnabled)
             {
                 administration.SetSubItemOrder(TenantManagementMenuNames.GroupName, 1);
